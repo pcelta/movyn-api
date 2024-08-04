@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   nginx:
     image: nginx:latest
@@ -11,9 +10,31 @@ services:
       - ./../:/var/www/html
     depends_on:
       - php
+    networks:
+      - movyn_network
 
   php:
-    image: php:8.3.9-fpm
+    image: movyn-php-fpm
     container_name: php-fpm
     volumes:
       - ./../:/var/www/html
+    depends_on:
+      - postgres
+    networks:
+      - movyn_network
+
+  postgres:
+    image: postgres
+    container_name: movyn-db
+    volumes:
+      - ./database/initial-dump.sql:/docker-entrypoint-initdb.d/01-db.sql
+    environment:
+      POSTGRES_PASSWORD: "rock4me!!"
+    ports:
+      - "5432:5432"
+    networks:
+      - movyn_network
+
+networks:
+  movyn_network:
+    driver: bridge

@@ -13,6 +13,13 @@ Add the following line to your /etc/hosts file
 ```
 
 
+In the root directory, build the php local image
+
+```sh
+docker build -t movyn-php-fpm .dev/php
+```
+
+
 In the .dev directory, spin up docker compose
 
 ```sh
