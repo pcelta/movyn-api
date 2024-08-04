@@ -28,25 +28,10 @@ Start and run the docker containers
 make start
 ```
 
-### Other Available commands
-
-Show all available commands
+Import seeds. This will populate your database with the relevant initial data
 
 ```sh
-make help
-```
-
-
-Stop the containers
-
-```sh
-make stop
-```
-
-If you need to get inside the php container
-
-```sh
-make ssh
+make movyn:import:seeds
 ```
 
 You should be able to access this url: http://local-movyn-api/health-check in your browser. You should see the response below
@@ -55,4 +40,44 @@ You should be able to access this url: http://local-movyn-api/health-check in yo
 {
   "message": "Movyn API is up and running! Let's roll!"
 }
+```
+
+### Other useful available commands
+
+Show all available commands
+
+```sh
+make help
+```
+
+Stop the containers
+
+```sh
+make stop
+```
+
+Stop and remove all containers
+
+```sh
+make reset
+```
+
+If you need to get inside the php container
+```sh
+make ssh
+```
+
+To run composer require
+```sh
+make composer-require dep=<PACKAGE_NAME>
+```
+
+To run the tests
+```sh
+make phpunit [path=path-to-a-file-or-folder]
+```
+
+To run bin/console commands
+```sh
+make bin c=<SOME-COMMAND>
 ```

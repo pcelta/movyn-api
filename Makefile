@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-o ?= -h
+c ?= -h
 dep ?=
 path ?=
 
@@ -31,7 +31,7 @@ build:
 .PHONY: start
 start:
 	@echo "Starting containers..."
-	cd .dev && docker-compose up -d
+	docker-compose up -d
 
 .PHONY: stop
 stop:
@@ -61,7 +61,7 @@ composer-require:
 .PHONY: bin
 bin:
 	@echo "Executing..."
-	docker exec -it php-fpm bin/console $(o)
+	docker exec -it php-fpm bin/console $(c)
 
 .PHONY: phpunit
 phpunit:
