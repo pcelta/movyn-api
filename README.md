@@ -1,7 +1,6 @@
-## How to set up your local environment on Mac OS
-
-
 ### Pre-requirements
+
+- Make
 - Docker
 - Docker Compose
 
@@ -12,19 +11,42 @@ Add the following line to your /etc/hosts file
 127.0.0.1 local-movyn-api
 ```
 
-
-In the root directory, build the php local image
+In the root directory, run the build command. This will build the necessary docker images
 
 ```sh
-docker build -t movyn-php-fpm .dev/php
+make build
+```
+
+To install all php dependencies
+```sh
+make composer-install
+```
+
+Start and run the docker containers
+
+```sh
+make start
+```
+
+### Other Available commands
+
+Show all available commands
+
+```sh
+make help
 ```
 
 
-In the .dev directory, spin up docker compose
+Stop the containers
 
 ```sh
-cd .dev
-docker-compose up -d
+make stop
+```
+
+If you need to get inside the php container
+
+```sh
+make ssh
 ```
 
 You should be able to access this url: http://local-movyn-api/health-check in your browser. You should see the response below
