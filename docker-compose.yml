@@ -6,8 +6,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/nginx.conf:ro
-      - ./../:/var/www/html
+      - ./.dev/nginx/default.conf:/etc/nginx/nginx.conf:ro
+      - ./:/var/www/html
     depends_on:
       - php
     networks:
@@ -17,7 +17,7 @@ services:
     image: movyn-php-fpm
     container_name: php-fpm
     volumes:
-      - ./../:/var/www/html
+      - ./:/var/www/html
     depends_on:
       - postgres
     networks:
@@ -27,7 +27,7 @@ services:
     image: postgres
     container_name: movyn-db
     volumes:
-      - ./database/initial-dump.sql:/docker-entrypoint-initdb.d/01-db.sql
+      - ./.dev/database/initial-dump.sql:/docker-entrypoint-initdb.d/01-db.sql
     environment:
       POSTGRES_PASSWORD: "rock4me!!"
     ports:

@@ -22,12 +22,12 @@ build:
 .PHONY: start
 start:
 	@echo "Starting containers..."
-	cd .dev && docker-compose up -d && cd ..
+	cd .dev && docker-compose up -d
 
 .PHONY: stop
 stop:
 	@echo "Stopping containers..."
-	cd .dev && docker-compose stop && cd ..
+	docker-compose stop
 
 .PHONY: ssh
 ssh:
