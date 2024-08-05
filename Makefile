@@ -51,7 +51,7 @@ ssh:
 .PHONY: composer
 composer:
 	@echo "Running composer $(c)"
-	docker run --rm --interactive --tty --volume $(PWD):/app composer $(c)
+	docker run --rm --interactive --tty --volume $(PWD):/app movyn-composer composer $(c)
 
 .PHONY: bin
 bin:
@@ -62,3 +62,8 @@ bin:
 phpunit:
 	@echo "Executing the unit tests..."
 	docker exec -it php-fpm bin/phpunit $(path)
+
+.PHONY: phpstan
+phpstan:
+	@echo "Executing PHPStan..."
+	docker run --rm --interactive --tty --volume $(PWD):/app movyn-composer vendor/bin/phpstan analyse src tests
