@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-c ?= -h
+c ?=
 dep ?=
 path ?=
 
@@ -15,10 +15,10 @@ help:
 	@echo "  stop                Stop the containers \n"
 	@echo "  ssh                 Open the CLI for the php container \n"
 	@echo "  bin                 Execute the bin/console with a custom arg"
-	@echo "                      Example: make bin o=doctrine:mapping:info \n"
-	@echo "  composer-install    Run composer install\n"
-	@echo "  composer-require    Run composer require"
-	@echo "                      Example: make composer-require dep=ramsey/uuid\n"
+	@echo "                      Example: make bin c=doctrine:mapping:info \n"
+	@echo "  composer            Run composer commands"
+	@echo "                      Example #1: make composer c='require dep=ramsey/uuid'"
+	@echo "                      Example #2: make composer c=install\n"
 	@echo "  phpunit             Run the tests"
 	@echo "                      Example: make phpunit [path=tests/unit/Entity]"
 
@@ -26,7 +26,7 @@ help:
 .PHONY: build
 build:
 	@echo "Building the Docker images..."
-	docker build -t movyn-php-fpm .dev/php
+	docker build -t movyn-php-fpm . -f .dev/php/Dockerfile.fpm && docker build -t movyn-composer . -f .dev/php/Dockerfile.composer
 
 .PHONY: start
 start:
@@ -48,15 +48,10 @@ ssh:
 	@echo "SSHing into the PHP container..."
 	docker exec -it php-fpm bash
 
-.PHONY: composer-install
-composer-install:
-	@echo "Run composer install"
-	docker exec -it php-fpm composer install
-
-.PHONY: composer-require
-composer-require:
-	@echo "Add a new dependence via composer"
-	docker exec -it php-fpm composer require $(dep)
+.PHONY: composer
+composer:
+	@echo "Running composer $(c)"
+	docker run --rm --interactive --tty --volume $(PWD):/app composer $(c)
 
 .PHONY: bin
 bin:
