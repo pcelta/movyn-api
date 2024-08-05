@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 #[ORM\Entity()]
 class Currency
@@ -29,6 +31,9 @@ class Currency
 
     #[ORM\Column(length: 10)]
     private ?string $nativeSymbol = null;
+
+    #[OneToMany(targetEntity: Country::class, mappedBy: 'currency')]
+    private Collection $countries;
 
     #[ORM\Column]
     private ?DateTime $createdAt = null;
