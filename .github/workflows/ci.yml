@@ -4,9 +4,13 @@ on:
   push:
 
 jobs:
-  build-test:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: php-actions/composer@v6 # or alternative dependency management
-    - uses: php-actions/phpunit@v3
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6 # or alternative dependency management
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
+        with:
+          version: 9.6
+          configuration: phpunit.xml.dist
