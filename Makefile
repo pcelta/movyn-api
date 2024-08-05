@@ -11,6 +11,7 @@ help:
 	@echo ""
 	@echo "Targets:"
 	@echo "  build               Build the Docker images\n"
+	@echo "  import-seeds        Import initial seeds to database\n"
 	@echo "  start               Start the containers \n"
 	@echo "  stop                Stop the containers \n"
 	@echo "  ssh                 Open the CLI for the php container \n"
@@ -27,6 +28,12 @@ help:
 build:
 	@echo "Building the Docker images..."
 	docker build -t movyn-php-fpm . -f .dev/php/Dockerfile.fpm && docker build -t movyn-composer . -f .dev/php/Dockerfile.composer
+
+.PHONY: import-seeds
+import-seeds:
+	@echo "Importing seeds..."
+	make bin c=movyn:import:currencies && \
+	make bin c=movyn:import:countries
 
 .PHONY: start
 start:

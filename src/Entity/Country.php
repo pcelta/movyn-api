@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping\ManyToOne;
 #[ORM\Entity()]
 class Country
 {
+    public const UID_PREFIX = 'cou';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -36,4 +38,49 @@ class Country
 
     #[ORM\Column]
     private ?DateTime $updatedAt = null;
+
+    public function setUid(string $uid): Country
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    public function setName(string $name): Country
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+    public function setAcronym(string $acronym): Country
+    {
+        $this->acronym = $acronym;
+
+        return $this;
+    }
+    public function setFlag(string $flag): Country
+    {
+        $this->flag = $flag;
+
+        return $this;
+    }
+    public function setCurrency(Currency $currency): Country
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+    public function setCreatedAt(DateTime $createdAt): Country
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function setUpdatedAt(DateTime $updatedAt): Country
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

@@ -16,4 +16,18 @@ class AbstractRepository
     {
         $this->isFlushDisabled = $isFlushDisabled;
     }
+
+    protected function persistAndFlush($entity): void
+    {
+        $this->em->persist($entity);
+
+        if (!$this->isFlushDisabled) {
+            $this->em->flush();
+        }
+    }
+
+    public function flush(): void
+    {
+        $this->em->flush();
+    }
 }
