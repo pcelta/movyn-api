@@ -19,7 +19,7 @@ make build
 
 To install all php dependencies
 ```sh
-make composer-install
+make composer c=install
 ```
 
 Start and run the docker containers
@@ -31,7 +31,7 @@ make start
 Import seeds. This will populate your database with the relevant initial data
 
 ```sh
-make movyn:import:seeds
+make import-seeds
 ```
 
 You should be able to access this url: http://local-movyn-api/health-check in your browser. You should see the response below
@@ -65,11 +65,6 @@ make reset
 If you need to get inside the php container
 ```sh
 make ssh
-```
-
-To run composer require
-```sh
-make composer-require dep=<PACKAGE_NAME>
 ```
 
 To run the tests

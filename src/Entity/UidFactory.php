@@ -10,7 +10,10 @@ class UidFactory
     private static array $mapping = [
         Currency::class => [
             'prefix' => Currency::UID_PREFIX
-        ]
+        ],
+        Country::class => [
+            'prefix' => Country::UID_PREFIX
+        ],
     ];
 
     public static function create(string $type): string
@@ -21,7 +24,6 @@ class UidFactory
 
         $prefix = self::$mapping[$type]['prefix'];
         $uuid = Uuid::uuid4();
-
 
         return sprintf('%s-%s', $prefix, $uuid);
     }
