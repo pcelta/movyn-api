@@ -17,7 +17,7 @@ CREATE TABLE "country" (
     "id" SERIAL PRIMARY KEY,
     "uid" VARCHAR(40) NOT NULL UNIQUE,
     "name" VARCHAR(255) NOT NULL,
-    "acronym" VARCHAR(50) NOT NULL,
+    "abbreviation" VARCHAR(3) NOT NULL,
     "flag" VARCHAR(255) NOT NULL,
     "fk_currency" INT NOT NULL,
     "created_at" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

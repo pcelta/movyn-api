@@ -23,8 +23,8 @@ class Country
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $acronym = null;
+    #[ORM\Column(length: 3)]
+    private ?string $abbreviation = null;
 
     #[ORM\Column(length: 255)]
     private ?string $flag = null;
@@ -52,24 +52,21 @@ class Country
 
         return $this;
     }
-    public function setAcronym(string $acronym): Country
-    {
-        $this->acronym = $acronym;
 
-        return $this;
-    }
     public function setFlag(string $flag): Country
     {
         $this->flag = $flag;
 
         return $this;
     }
+
     public function setCurrency(Currency $currency): Country
     {
         $this->currency = $currency;
 
         return $this;
     }
+
     public function setCreatedAt(DateTime $createdAt): Country
     {
         $this->createdAt = $createdAt;
@@ -80,6 +77,13 @@ class Country
     public function setUpdatedAt(DateTime $updatedAt): Country
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function setAbbreviation(string $abbreviation): Country
+    {
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }

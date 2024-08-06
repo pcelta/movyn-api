@@ -18,6 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CountryETLCommand extends Command
 {
     private $currencies = [];
+    private $countries = [];
+
     public function __construct(
         private string $rootDir,
         private CurrencyRepository $currencyRepository,
@@ -31,6 +33,16 @@ class CountryETLCommand extends Command
         $rawCountries = json_decode(file_get_contents($this->rootDir . '/data/country-by-currency-code.json'), true);
         $currentDatetime = new DateTime();
         foreach ($rawCountries as $data) {
+            $this->countries[$data['country']] = $data;
+        }
+
+        $rawCountriesWithAbbreviation = json_decode(file_get_contents($this->rootDir . '/data/country-by-abbreviation.json'), true);
+        foreach ($rawCountriesWithAbbreviation as $data) {
+            $this->countries[$data['country']]['abbreviation'] = $data['abbreviation'];
+        }
+
+        $countriesInsertedCount = 0;
+        foreach ($this->countries as $data) {
             try {
                 $currency = $this->getCurrencyByCode($data['currency_code'] ?? '');
             } catch (NotFoundException) {
@@ -40,17 +52,19 @@ class CountryETLCommand extends Command
             $country = new Country();
             $country->setUid(UidFactory::create(Country::class))
                 ->setName($data['country'])
-                ->setAcronym('TEMP')
+                ->setAbbreviation($data['abbreviation'] ?? '')
                 ->setFlag('TEMP')
                 ->setCurrency($currency)
                 ->setCreatedAt($currentDatetime)
                 ->setUpdatedAt($currentDatetime);
 
             $this->countryRepository->persist($country);
+
+            $countriesInsertedCount++;
         }
         $this->countryRepository->flush();
 
-        $output->writeln(sprintf('%s - %d countries imported - OK', CountryETLCommand::class, count($rawCountries)));
+        $output->writeln(sprintf('%s - %d countries imported - OK', CountryETLCommand::class, $countriesInsertedCount));
 
         return Command::SUCCESS;
     }
